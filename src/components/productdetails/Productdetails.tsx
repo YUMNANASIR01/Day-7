@@ -130,7 +130,7 @@ export default function ProductDetails({
           </TabsContent>
         </Tabs>
       </div>
-      <CommentSection />
+      <CommentSection blog_id={""} />
     </>
   )
 }
