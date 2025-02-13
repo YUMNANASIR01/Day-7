@@ -16,7 +16,7 @@ export const cartNumber = atom(0)
 import { atom } from "jotai"
 
 
-export const searchName = atom("")
+// export const searchName = atom("")
 
 
 
@@ -24,6 +24,5 @@ export const searchName = atom("")
 
 
 
-
-
+export const searchQueryAtom = atom('') // Add this line
 

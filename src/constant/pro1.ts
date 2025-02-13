@@ -1,4 +1,9 @@
 export interface Product {
+  [x: string]: number
+  productDescription: string
+  productImage: string
+  productPrice: number
+  productName: string
   id: string
   imageUrl: string
   name: string

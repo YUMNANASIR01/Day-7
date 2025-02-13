@@ -23,5 +23,9 @@ export default function StatisticsPage() {
     return <div>Loading...</div>;
   }
 
-  return <StatisticsCharts />;
+  return <StatisticsCharts />
 }
+
+
+
+
