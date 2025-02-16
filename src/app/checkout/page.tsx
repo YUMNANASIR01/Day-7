@@ -19,6 +19,7 @@ import Shopbottombar from "@/components/shopBottomBar/Shopbottombar"
 import { useEffect, useState } from "react"
 import { post_req } from "@/services/shipEnigine_Api"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 
 interface Iproduct {
@@ -30,6 +31,8 @@ interface Iproduct {
 }
 
 export default function CheckoutForm() {
+
+  const route = useRouter()
   
   const [cartItem, setCartItem] = useState([])
 
@@ -41,6 +44,8 @@ export default function CheckoutForm() {
 
   const [isShipDetail, setIsShipDetail] = useState(false)
 
+  const totalAmount = cartItem.reduce((total: number, item: Iproduct)=>{return total + (+item.price * +item.quantity)},0)
+
   function placeOrder(){
     if(!isShipDetail){
       toast.warning("Please fill Shipment Details", {
@@ -49,13 +54,7 @@ export default function CheckoutForm() {
       })
     }else {
       if(cartItem.length > 0){
-        toast.success("Payment successful ✅", {
-          className: 'text-lg',
-          style: { fontSize: '18px' },
-          })
-
-        localStorage.setItem('cart', JSON.stringify([]))
-        setCartItem([])
+        route.push(`/payment?amount=${totalAmount}`)
       }else{
         toast.error("Add some Items to cart 🛒", {
           className: 'text-lg',
@@ -248,7 +247,7 @@ export default function CheckoutForm() {
 
                 <div className="flex justify-between border-t pt-4">
                   <span>Total</span>
-                  <span className="text-[#B88E2F] font-bold">$ {cartItem.reduce((total: number, item: Iproduct)=>{return total + (+item.price * +item.quantity)},0)}.00</span>
+                  <span className="text-[#B88E2F] font-bold">$ {}.00</span>
                 </div>
 
                 <RadioGroup defaultValue="bank-transfer" className="mt-8">
@@ -287,10 +286,6 @@ export default function CheckoutForm() {
     </div>
   )
 }
-
-
-
-
 
 
 

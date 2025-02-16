@@ -8,8 +8,6 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { useEffect, useState } from "react"
 import { generatePDF } from "@/components/pdfGenerator"
 
-
-
 export default function PaymentSuccessPage() {
   
   const [orderDetails, setOrderDetails] = useState({

@@ -1,24 +1,22 @@
-
-
 'use client';
 
 import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import { useEffect, useState } from 'react';
 
-function CheckoutForm({amount}: {amount: number}) {
+function CheckoutForm({amount} : {amount: number}) {
   const stripe = useStripe();
   const elements = useElements();
 
   const [clientSecret, setClientSecret] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+
 
   useEffect(() => {
     // Create PaymentIntent on the server
     fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount}),
+      body: JSON.stringify({ amount: amount }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -49,9 +47,11 @@ function CheckoutForm({amount}: {amount: number}) {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${window.location.origin}/payment-success`,
+        return_url: `${window.location.origin}/PaymentSuccessPage`,
       },
     });
+
+    localStorage.setItem("cart", JSON.stringify([]));
 
     if (confirmError) {
       setError(confirmError.message || 'Payment confirmation failed');
@@ -64,7 +64,7 @@ function CheckoutForm({amount}: {amount: number}) {
         {clientSecret && <PaymentElement />}
         {error && <p className="text-red-600">{error}</p>}
         <button className="bg-black text-white p-5" type="submit">
-          Payment
+          Payment ({(amount).toLocaleString()})
         </button>
       </div>
     </form>
